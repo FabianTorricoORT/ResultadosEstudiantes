@@ -1,0 +1,23 @@
+﻿<Window x:Class="ResultadosEstudiantes.VentanaBienvenida"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bienvenida" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <!-- FONDO -->
+        <Grid.Background>
+            <ImageBrush ImageSource="Image/301132195_2004259949784703_2014455653178328022_n.jpg" Stretch="Fill"/>
+        </Grid.Background>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+
+            <!-- BIENVENIDA -->
+            <TextBlock FontSize="72" FontWeight="Bold" Margin="0,0,0,20" 
+                       Text="Bienvenido, Profesor/a" HorizontalAlignment="Center" Background="White"/>
+
+            <!-- BOTON -->
+            <Button Content="Iniciar" Width="166" Height="70" Click="Iniciar_Click"/>
+
+        </StackPanel>
+    </Grid>
+</Window>
