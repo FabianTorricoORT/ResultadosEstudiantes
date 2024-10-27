@@ -9,7 +9,7 @@ namespace ResultadosEstudiantes.Clases
     public class Estudiante
     {
 
-        //holaaaaa
+        //adios
         public string ApellidoNombre { get; set; }
         public long DNI { get; set; }
         public long? Legajo { get; set; }
