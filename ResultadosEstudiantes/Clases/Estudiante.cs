@@ -8,6 +8,7 @@ namespace ResultadosEstudiantes.Clases
 {
     public class Estudiante
     {
+        //Samcelis
         public string ApellidoNombre { get; set; }
         public long DNI { get; set; }
         public long? Legajo { get; set; }
