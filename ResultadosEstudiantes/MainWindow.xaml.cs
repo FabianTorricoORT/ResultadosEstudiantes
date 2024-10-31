@@ -94,5 +94,10 @@ namespace ResultadosEstudiantes
         {
 
         }
+
+        private void cmbMateria_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

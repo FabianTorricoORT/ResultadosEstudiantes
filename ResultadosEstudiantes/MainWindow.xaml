@@ -14,76 +14,80 @@
 
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="30" 
-                       HorizontalAlignment="Center" Margin="0,0,0,20" FontWeight="Bold"><Run Language="es-ar" Text="INGRESE LOS DATOS DEL ESTUDIANTES"/></TextBlock>
+                       HorizontalAlignment="Center" Margin="0,0,0,20" FontWeight="Bold" Foreground="#FFFDE124" FontFamily="Calisto MT"><Run Language="es-ar" Text="INGRESE LOS DATOS DEL ESTUDIANTES"/></TextBlock>
 
             <Border BorderBrush="Gray" BorderThickness="1" Background="White" Padding="0" Height="846">
                 <StackPanel Width="415">
 
                     <!-- DATO 1 -->
-                    <TextBlock Text="Apellido y Nombre:" FontSize="20" FontWeight="Bold" />
-                    <TextBox x:Name="txtApellidoNombre" Width="350" Height="30" FontSize="14" Margin="0,5,0,10"/>
+                    <TextBlock Text="Apellido y Nombre:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <TextBox x:Name="txtApellidoNombre" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT"/>
 
                     <!-- DATO 2 -->
-                    <TextBlock Text="DNI:" FontSize="20" FontWeight="Bold" />
-                    <TextBox x:Name="txtDNI" Width="350" Height="30" FontSize="14" Margin="0,5,0,10"/>
+                    <TextBlock Text="DNI:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <TextBox x:Name="txtDNI" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT"/>
 
                     <!-- DATO OPCIONAL -->
-                    <TextBlock Text="Legajo:" FontSize="20" FontWeight="Bold" />
-                    <TextBox x:Name="txtLegajo" Width="350" Height="30" FontSize="14" Margin="0,5,0,10"/>
+                    <TextBlock Text="Legajo:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <TextBox x:Name="txtLegajo" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT"/>
 
                     <!-- CONFIRMACION DE ASISTENCIA -->
-                    <TextBlock Text="Asistencia:" FontSize="20" FontWeight="Bold" />
+                    <TextBlock Text="Asistencia:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
                     <CheckBox x:Name="chkAsistencia" FontSize="19" Margin="0,5,0,10">
-                        <TextBlock Text="¿Cumplió con la asistencia mínima?" FontSize="17" />
+                        <TextBlock Text="¿Cumplió con la asistencia mínima?" FontSize="17" FontFamily="Calibri" />
                     </CheckBox>
 
                     <!-- DATO TP1 -->
-                    <TextBlock Text="TP1:" FontSize="20" FontWeight="Bold" />
-                    <ComboBox x:Name="cmbTP1" Width="350" Height="30" FontSize="14" Margin="0,5,0,10">
+                    <TextBlock Text="TP1:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <ComboBox x:Name="cmbTP1" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT">
                         <ComboBoxItem Content="Entregado"/>
                         <ComboBoxItem Content="No Entregado"/>
                     </ComboBox>
 
                     <!-- DATO TP2 -->
-                    <TextBlock Text="TP2:" FontSize="20" FontWeight="Bold" />
-                    <ComboBox x:Name="cmbTP2" Width="350" Height="30" FontSize="14" Margin="0,5,0,10">
+                    <TextBlock Text="TP2:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <ComboBox x:Name="cmbTP2" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT">
                         <ComboBoxItem Content="Entregado"/>
                         <ComboBoxItem Content="No Entregado"/>
                     </ComboBox>
 
                     <!-- DATO TP3 -->
-                    <TextBlock Text="TP3:" FontSize="20" FontWeight="Bold" />
-                    <ComboBox x:Name="cmbTP3" Width="350" Height="30" FontSize="14" Margin="0,5,0,10">
+                    <TextBlock Text="TP3:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <ComboBox x:Name="cmbTP3" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT">
                         <ComboBoxItem Content="Entregado"/>
                         <ComboBoxItem Content="No Entregado"/>
                     </ComboBox>
 
                     <!-- DATO TP4 -->
-                    <TextBlock Text="TP4:" FontSize="20" FontWeight="Bold" />
-                    <ComboBox x:Name="cmbTP4" Width="350" Height="30" FontSize="14" Margin="0,5,0,10">
+                    <TextBlock Text="TP4:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <ComboBox x:Name="cmbTP4" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT">
                         <ComboBoxItem Content="Entregado"/>
                         <ComboBoxItem Content="No Entregado"/>
                     </ComboBox>
 
                     <!-- PARCIAL 1 -->
-                    <TextBlock Text="Parcial 1:" FontSize="20" FontWeight="Bold" />
-                    <TextBox x:Name="txtParcial1" Width="350" Height="30" FontSize="14" Margin="0,5,0,10"/>
+                    <TextBlock Text="Parcial 1:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <TextBox x:Name="txtParcial1" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT"/>
 
                     <!-- PARCIAL 2 -->
-                    <TextBlock Text="Parcial 2:" FontSize="20" FontWeight="Bold" />
-                    <TextBox x:Name="txtParcial2" Width="350" Height="30" FontSize="14" Margin="0,5,0,10"/>
+                    <TextBlock Text="Parcial 2:" FontSize="20" FontWeight="Bold" FontFamily="Calisto MT" />
+                    <TextBox x:Name="txtParcial2" Width="350" Height="30" FontSize="14" Margin="0,5,0,10" FontFamily="Calisto MT"/>
 
-                    <TextBlock Text="Seleccione la materia:" Margin="0,10,0,0" FontSize="26" FontWeight="Bold"/>
-                    <ComboBox x:Name="cmbMateria" Width="300" Height="40" FontSize="26">
+                    <TextBlock Text="Seleccione la materia:" Margin="0,10,0,0" FontSize="26" FontWeight="Bold" FontFamily="Calisto MT"/>
+                    <ComboBox x:Name="cmbMateria" Width="300" Height="40" FontSize="26" SelectionChanged="cmbMateria_SelectionChanged" FontFamily="Calisto MT">
                         <ComboBoxItem Content="Programación II" />
                         <ComboBoxItem Content="Base de Datos" />
                         <ComboBoxItem Content="Probabilidad y Estadística" />
                         <ComboBoxItem Content="Inglés I" />
+                        <ComboBoxItem Content="Matematica" />
+                        <ComboBoxItem Content="Programacion I" />
+                        <ComboBoxItem Content="Arquitectura y Sistemas Informaticos" />
+                        <ComboBoxItem Content="Organizacion Empresarial" />
                     </ComboBox>
 
                     <!-- BOTON -->
                     <Button Content="Guardar" Width="100" Height="30"   
-                            HorizontalAlignment="Center" Margin="0,10,0,0" Click="GuardarEstudiante"/>
+                            HorizontalAlignment="Center" Margin="0,10,0,0" Click="GuardarEstudiante" FontFamily="Calisto MT"/>
 
                 </StackPanel>
             </Border>
