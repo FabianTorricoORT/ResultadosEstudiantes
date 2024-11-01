@@ -99,5 +99,25 @@ namespace ResultadosEstudiantes
         {
 
         }
+
+        private void cmbTP1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void txtLegajo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtApellidoNombre_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void cmbTP2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
