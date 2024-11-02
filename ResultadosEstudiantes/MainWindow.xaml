@@ -81,12 +81,29 @@
                         <ComboBoxItem Content="Inglés I" />
                     </ComboBox>
 
-                    <!-- BOTON -->
+                    <!-- BOTON GUARDAR -->
                     <Button Content="Guardar" Width="100" Height="30"   
                             HorizontalAlignment="Center" Margin="0,10,0,0" Click="GuardarEstudiante"/>
 
+                    <!-- BOTON CARGAR ALUMNOS -->
+                    <Button Content="Cargar Estudiantes" Width="150" Height="30"
+                            HorizontalAlignment="Center" Margin="0,10,0,0" Click="CargarEstudiantes"/>
+
                 </StackPanel>
             </Border>
+
+            <!-- TABLA PARA MOSTRAR ALUMNOS -->
+            <DataGrid x:Name="dataGridEstudiantes" AutoGenerateColumns="False" Height="300" Width="800" Margin="0,20,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding estudianteID}" Width="50"/>
+                    <DataGridTextColumn Header="Apellido y Nombre" Binding="{Binding ApellidoNombre}" Width="200"/>
+                    <DataGridTextColumn Header="DNI" Binding="{Binding DNI}" Width="100"/>
+                    <DataGridTextColumn Header="Legajo" Binding="{Binding Legajo}" Width="100"/>
+                    <DataGridTextColumn Header="Asistencia" Binding="{Binding Asistencia}" Width="100"/>
+                    <DataGridTextColumn Header="Nota Final" Binding="{Binding NotaFinal}" Width="100"/>
+                    <DataGridTextColumn Header="Situación" Binding="{Binding Situacion}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
     </Grid>
 </Window>

@@ -13,86 +13,113 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace ResultadosEstudiantes
 {
-
     public partial class MainWindow : Window
     {
+        private string connectionString = "Data Source=YOUR_SERVER;Initial Catalog=UniversidadDB;Integrated Security=True"; // Cambia YOUR_SERVER por tu servidor SQL
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        private void CargarEstudiantes()
+        {
+            List<Estudiante> estudiantes = new List<Estudiante>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT e.estudianteID, e.Apellido + ', ' + e.Nombre AS ApellidoNombre, e.DNI, e.Legajo, em.Asistencia, em.NotaFinal, em.Situacion FROM Estudiantes e JOIN EstudiantesMaterias em ON e.estudianteID = em.EstudianteID", connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    estudiantes.Add(new Estudiante
+                    {
+                        estudianteID = reader.GetInt32(0),
+                        ApellidoNombre = reader.GetString(1),
+                        DNI = reader.GetString(2),
+                        Legajo = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        Asistencia = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                        NotaFinal = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
+                        Situacion = reader.GetString(6)
+                    });
+                }
+            }
+
+            dataGridEstudiantes.ItemsSource = estudiantes;
+        }
+
         private void GuardarEstudiante(object sender, RoutedEventArgs e)
         {
+            string apellidoNombre = txtApellidoNombre.Text;
+            string dni = txtDNI.Text;
+            string legajo = txtLegajo.Text;
+            int asistencia = chkAsistencia.IsChecked == true ? 1 : 0;
+            int notaFinal = 0; // Se puede calcular según los parciales y trabajos prácticos
+            string situacion = "Aprobado"; // Establecer según la lógica
 
-            var materiaSeleccionada = (cmbMateria.SelectedItem as ComboBoxItem)?.Content.ToString();
-
-            // COMENZAMOS CON LAS VALIDACION Y EXEPCIONES
-            try
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                if (txtApellidoNombre.Text.Length > 50) //VALIDACION DEL NOMBRE COMPLETO
-                {
-                    MessageBox.Show("El apellido y nombre no puede exceder los 50 caracteres.", "Error de Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return; 
-                }
+                connection.Open();
+                SqlCommand command = new SqlCommand("INSERT INTO Estudiantes (Apellido, Nombre, DNI, Legajo) OUTPUT INSERTED.estudianteID VALUES (@Apellido, @Nombre, @DNI, @Legajo)", connection);
+                command.Parameters.AddWithValue("@Apellido", apellidoNombre.Split(',')[0].Trim());
+                command.Parameters.AddWithValue("@Nombre", apellidoNombre.Split(',')[1].Trim());
+                command.Parameters.AddWithValue("@DNI", dni);
+                command.Parameters.AddWithValue("@Legajo", legajo ?? (object)DBNull.Value);
 
-                long dni;
-                if (!long.TryParse(txtDNI.Text, out dni) || txtDNI.Text.Length < 7 || txtDNI.Text.Length > 8) //VALIDACION DEL DNI(ARGENTINO)
-                {
-                    MessageBox.Show("El DNI debe ser un número de 7 a 8 dígitos.", "Error de Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return; 
-                }
+                int estudianteID = (int)command.ExecuteScalar();
 
-                if (int.TryParse(txtParcial1.Text, out int parcial1) && (parcial1 < 1 || parcial1 > 10)) 
-                {
-                    MessageBox.Show("El Parcial 1 debe ser un número entre 1 y 10.", "Error de Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return; 
-                }
-          
-                if (int.TryParse(txtParcial2.Text, out int parcial2) && (parcial2 < 1 || parcial2 > 10))
-                {
-                    MessageBox.Show("El Parcial 2 debe ser un número entre 1 y 10.", "Error de Validación", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return; 
-                }
+                // Aquí puedes agregar lógica para la tabla EstudiantesMaterias si es necesario
+                SqlCommand commandEm = new SqlCommand("INSERT INTO EstudiantesMaterias (EstudianteID, MateriaID, Situacion, Asistencia, NotaFinal) VALUES (@EstudianteID, @MateriaID, @Situacion, @Asistencia, @NotaFinal)", connection);
+                commandEm.Parameters.AddWithValue("@EstudianteID", estudianteID);
+                commandEm.Parameters.AddWithValue("@MateriaID", 1); // Cambia según la materia seleccionada
+                commandEm.Parameters.AddWithValue("@Situacion", situacion);
+                commandEm.Parameters.AddWithValue("@Asistencia", asistencia);
+                commandEm.Parameters.AddWithValue("@NotaFinal", notaFinal);
 
-                // CREA UN NUEVO ESTUDIANTE
-                var estudiante = new Estudiante
-                {
-                    ApellidoNombre = txtApellidoNombre.Text,
-                    DNI = dni,
-                    Legajo = string.IsNullOrWhiteSpace(txtLegajo.Text) ? (long?)null : long.Parse(txtLegajo.Text),
-                    Asistencia = chkAsistencia.IsChecked ?? false,
-                    TP1Entregado = cmbTP1.SelectedItem is ComboBoxItem tp1 && tp1.Content.ToString() == "Entregado",
-                    TP2Entregado = cmbTP2.SelectedItem is ComboBoxItem tp2 && tp2.Content.ToString() == "Entregado",
-                    TP3Entregado = cmbTP3.SelectedItem is ComboBoxItem tp3 && tp3.Content.ToString() == "Entregado",
-                    TP4Entregado = cmbTP4.SelectedItem is ComboBoxItem tp4 && tp4.Content.ToString() == "Entregado",
-                    Parcial1 = parcial1, 
-                    Parcial2 = parcial2  
-                };
-
-                
-                estudiante.CalcularResultados();
-
-                // MOSTRAR DATOS POR PANTALLA
-                MessageBox.Show(
-                   $"Nombre: {estudiante.ApellidoNombre}\nDNI: {estudiante.DNI}\nLegajo: {(string.IsNullOrWhiteSpace(estudiante.Legajo.ToString()) ? "No posee" : estudiante.Legajo.ToString())}\n" +
-                   $"Asistencia: {estudiante.Asistencia}\nTP1: {(estudiante.TP1Entregado ? "Entregado" : "No Entregado")}\n" +
-                   $"TP2: {(estudiante.TP2Entregado ? "Entregado" : "No Entregado")}\nTP3: {(estudiante.TP3Entregado ? "Entregado" : "No Entregado")}\n" +
-                   $"TP4: {(estudiante.TP4Entregado ? "Entregado" : "No Entregado")}\nParcial 1: {estudiante.Parcial1}\n" +
-                   $"Parcial 2: {estudiante.Parcial2}\nMateria: {materiaSeleccionada}\nSituación de la Materia: {estudiante.SituacionMateria}\nNota Final: {estudiante.NotaFinal:F2}"
-);
+                commandEm.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}", "Error de Validación", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
+            CargarEstudiantes();
         }
 
-        private void chkAsistencia_Checked(object sender, RoutedEventArgs e)
+        // Aquí podrías agregar métodos para editar y eliminar estudiantes
+
+        // Ejemplo de cómo podrías implementar el método para editar un estudiante
+        private void EditarEstudiante(int estudianteID)
         {
-
+            // Lógica para editar el estudiante, similar a GuardarEstudiante
         }
+
+        // Ejemplo de cómo podrías implementar el método para eliminar un estudiante
+        private void EliminarEstudiante(int estudianteID)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("DELETE FROM Estudiantes WHERE estudianteID = @EstudianteID", connection);
+                command.Parameters.AddWithValue("@EstudianteID", estudianteID);
+                command.ExecuteNonQuery();
+            }
+
+            CargarEstudiantes();
+        }
+    }
+
+    public class Estudiante
+    {
+        public int estudianteID { get; set; }
+        public string ApellidoNombre { get; set; }
+        public string DNI { get; set; }
+        public string Legajo { get; set; }
+        public int Asistencia { get; set; }
+        public int NotaFinal { get; set; }
+        public string Situacion { get; set; }
     }
 }

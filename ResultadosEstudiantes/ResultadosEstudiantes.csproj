@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -55,6 +56,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Clases\EstudianteMateria.cs" />
+    <Compile Include="Clases\EstudianteRepository.cs" />
+    <Compile Include="Clases\Materia.cs" />
+    <Compile Include="Clases\Parcial.cs" />
+    <Compile Include="Clases\TrabajoPractico.cs" />
+    <Compile Include="UniversidadDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UniversidadDBDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="VentanaBienvenida.xaml.cs">
       <DependentUpon>VentanaBienvenida.xaml</DependentUpon>
     </Compile>
@@ -97,6 +108,17 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="UniversidadDBDataSet.xsc">
+      <DependentUpon>UniversidadDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="UniversidadDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>UniversidadDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="UniversidadDBDataSet.xss">
+      <DependentUpon>UniversidadDBDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
